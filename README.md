@@ -1,5 +1,5 @@
 # papirus-folders-gui-wayland
-papirus-folders-gui is a graphical user interface for papirus-folders, this program change the folders color of Papirus.
+papirus-folders-gui is a graphical user interface for papirus-folders, this program changes the folders color of Papirus.
 This fork of papirus-folders-gui is intended for use in systems using Wayland, rather than X-based GUIs.
 `pkexec papirus-folders` requires elevated permissions and the original version of papirus-folders-gui did not address this.
 This modified version allows the program to launch and will present the user with system authentication dialog upon the selection of a new folder color.
