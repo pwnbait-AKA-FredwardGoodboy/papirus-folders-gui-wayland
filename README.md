@@ -70,8 +70,6 @@ git clone https://github.com/pwnbait-AKA-FredwardGoodboy/papirus-folders-gui-way
     
    First Download the code as .zip and and unzip the .zip file,
    then open a terminal in the source folder and run `make`
-  ### Premade build
-   You can download a premade build (papirus-folders-gui) and run it.
    ### AUR
   If you are an Arch Linux (or derived) user, you can install Papirus folders GUI from the AUR, you need an AUR helper just like Paru, Yay, Pamac, Etc
     
