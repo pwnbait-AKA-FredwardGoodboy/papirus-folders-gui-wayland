@@ -3,7 +3,7 @@ papirus-folders-gui is a graphical user interface for papirus-folders, this prog
 This fork of papirus-folders-gui is intended for use in systems using Wayland, rather than X-based GUIs.
 `pkexec papirus-folders` requires elevated permissions and the original version of papirus-folders-gui did not address this.
 This modified version allows the program to launch and will present the user with system authentication dialog upon the selection of a new folder color.
-This fork was edited from the original project with the assistance Gemini-CLI.
+This fork was edited from the original project with the assistance of Gemini-CLI.
 
 I will not be providing support.
 
@@ -45,7 +45,10 @@ Note: This project doesn't provide any folder icons
    You can install it using the following command:
 
     sudo dpkg -i papirus-folders-gui-0.1-Linux.deb
-    sudo apt install -f # To install any missing dependencies
+
+   To fix missing dependencies:
+   
+    sudo apt install -f
    
    ### Git clone
    You can install papirus-folders-gui on your system with next steps.
