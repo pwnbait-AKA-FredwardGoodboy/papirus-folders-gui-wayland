@@ -1,5 +1,11 @@
-# papirus-folders-gui
-papirus-folders-gui is a graphical user interface for papirus-folders, this program change the folders color of Papirus
+# papirus-folders-gui-wayland
+papirus-folders-gui is a graphical user interface for papirus-folders, this program change the folders color of Papirus.
+This fork of papirus-folders-gui is intended for use in systems using Wayland, rather than X-based GUIs.
+`pkexec papirus-folders` requires elevated permissions and the original version of papirus-folders-gui did not address this.
+This modified version allows the program to launch and will present the user with system authentication dialog upon the selection of a new folder color.
+This fork was edited from the original project with the assistance Gemini-CLI.
+
+I will not be providing support.
 
 Note: This project doesn't provide any folder icons
 ## Table of contents
@@ -31,12 +37,22 @@ Note: This project doesn't provide any folder icons
  You can download papirus folder on <a href=”url”>https://github.com/PapirusDevelopmentTeam/papirus-folders#installation</a>
  
  ## installation
+   ### .deb installer package (Pop!_OS 24.04)
+
+   Users of Pop!_OS 24.04 *should* be able to install this version, but it is untested.
+   Download and run the .deb package found in this repository at your own risk.
+
+   You can install it using the following command:
+
+    sudo dpkg -i papirus-folders-gui-0.1-Linux.deb
+    sudo apt install -f # To install any missing dependencies
+   
    ### Git clone
    You can install papirus-folders-gui on your system with next steps.
        
    First clone the git 
   ```
-git clone https://github.com/ItzSelenux/papirus-folders-gui
+git clone https://github.com/pwnbait-AKA-FredwardGoodboy/papirus-folders-gui-wayland
 ```
   then go to the code folder
   ```
@@ -50,23 +66,23 @@ git clone https://github.com/ItzSelenux/papirus-folders-gui
   make
   ```
   ### Download and compile
-   you can download the code and compile with next steps
+   You can download the code and compile with the following steps:
     
-   First Download the code as zip and and unzip the zip
-   then open a terminal in the source folder an run make
-  ### Premaked build
-   you can download a premaked build (papirus-folders-gui) and run!
+   First Download the code as .zip and and unzip the .zip file,
+   then open a terminal in the source folder and run `make`
+  ### Premade build
+   You can download a premade build (papirus-folders-gui) and run it.
    ### AUR
-  if you are an Arch Linux (or derived) user, you can install Papirus folders GUI from the AUR, you need an AUR helper just like Paru, Yay, Pamac, Etc
+  If you are an Arch Linux (or derived) user, you can install Papirus folders GUI from the AUR, you need an AUR helper just like Paru, Yay, Pamac, Etc
     
  ## Usage
   ### Color change
   Select a color from the list, when you do, a window will appear where you will have to put your Root password, when you have entered the password, 
-  restart your file explorer (you can use "Kill File Manager" button), and you will see your folders from the color you selected
+  restart your file explorer (you can use "Kill File Manager" button), and you will see your folders from the color you selected.
    
   ## Kill File manager
-   if you want to kill the file manager to see the changes, you can use the "Kill File manager" button
-   actually this file managers was supported:
+   If you want to kill the file manager to see the changes, you can use the "Kill File manager" button.
+   The following file managers are supported (in the original version of papirus-folders-gui, untested under Wayland):
    - Caja (Mate file manager)
    - Dolphin (Plasma file manager)
    - Nautilus (Gnome file manager)
