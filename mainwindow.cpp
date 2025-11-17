@@ -6,6 +6,8 @@
 #include "papirus.h"
 #include "polkit.h"
 #include "filemanager.h"
+#include <QDebug>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -14,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     x = new QProcess (this);
 
+    connect(x, &QProcess::errorOccurred, this, &MainWindow::processError);
+    connect(x, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &MainWindow::processFinished);
 }
 
 MainWindow::~MainWindow()
@@ -21,125 +25,158 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::processError(QProcess::ProcessError error)
+{
+    qDebug() << "Process error:" << error;
+    qDebug() << "Process error string:" << x->errorString();
+}
+
+void MainWindow::processFinished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    qDebug() << "Process finished with exit code:" << exitCode;
+    qDebug() << "Process exit status:" << exitStatus;
+    qDebug() << "Process stdout:" << x->readAllStandardOutput();
+    qDebug() << "Process stderr:" << x->readAllStandardError();
+}
+
+void MainWindow::runPapirusFolders(const QString& color)
+{
+    QString program = "pkexec";
+    QStringList arguments;
+    arguments << "env"
+              << QString("WAYLAND_DISPLAY=%1").arg(qgetenv("WAYLAND_DISPLAY"))
+              << QString("XDG_RUNTIME_DIR=%1").arg(qgetenv("XDG_RUNTIME_DIR"))
+              << "papirus-folders"
+              << "-C"
+              << color;
+    x->start(program, arguments);
+}
 
 void MainWindow::on_black_clicked()
 {
-    x->start("pkexec papirus-folders -C black");
+    runPapirusFolders("black");
 }
 
 void MainWindow::on_blue_clicked()
 {
-    x->start("pkexec papirus-folders -C blue");
+    runPapirusFolders("blue");
 }
 
 void MainWindow::on_bluegrey_clicked()
 {
-    x->start("pkexec papirus-folders -C bluegrey");
+    runPapirusFolders("bluegrey");
 }
 
 void MainWindow::on_breeze_clicked()
 {
-    x->start("pkexec papirus-folders -C breeze");
+    runPapirusFolders("breeze");
 }
 
 void MainWindow::on_brown_clicked()
 {
-    x->start("pkexec papirus-folders -C brown");
+    runPapirusFolders("brown");
 }
 
 void MainWindow::on_carmine_clicked()
 {
-    x->start("pkexec papirus-folders -C carmine");
+    runPapirusFolders("carmine");
 }
 
 void MainWindow::on_cyan_clicked()
 {
-    x->start("pkexec papirus-folders -C cyan");
+    runPapirusFolders("cyan");
 }
 
 void MainWindow::on_deeporange_clicked()
 {
-    x->start("pkexec papirus-folders -C deeporange");
+    runPapirusFolders("deeporange");
 }
 
 void MainWindow::on_green_clicked()
 {
-    x->start("pkexec papirus-folders -C green");
+    runPapirusFolders("green");
 }
 
 void MainWindow::on_grey_clicked()
 {
-    x->start("pkexec papirus-folders -C grey");
+    runPapirusFolders("grey");
 }
 
 void MainWindow::on_indigo_clicked()
 {
-    x->start("pkexec papirus-folders -C indigo");
+    runPapirusFolders("indigo");
 }
 
 void MainWindow::on_magenta_clicked()
 {
-    x->start("pkexec papirus-folders -C magenta");
+    runPapirusFolders("magenta");
 }
 
 void MainWindow::on_nordic_clicked()
 {
-    x->start("pkexec papirus-folders -C nordic");
+    runPapirusFolders("nordic");
 }
 
 void MainWindow::on_orange_clicked()
 {
-    x->start("pkexec papirus-folders -C orange");
+    runPapirusFolders("orange");
 }
 
 void MainWindow::on_palebrown_clicked()
 {
-    x->start("pkexec papirus-folders -C palebrown");
+    runPapirusFolders("palebrown");
 }
 
 void MainWindow::on_paleorange_clicked()
 {
-    x->start("pkexec papirus-folders -C paleorange");
+    runPapirusFolders("paleorange");
 }
 
 void MainWindow::on_pink_clicked()
 {
-    x->start("pkexec papirus-folders -C pink");
+    runPapirusFolders("pink");
 }
 
 void MainWindow::on_red_clicked()
 {
-    x->start("pkexec papirus-folders -C red");
+    runPapirusFolders("red");
 }
 
 void MainWindow::on_teal_clicked()
 {
-    x->start("pkexec papirus-folders -C teal");
+    runPapirusFolders("teal");
 }
 
 void MainWindow::on_violet_clicked()
 {
-    x->start("pkexec papirus-folders -C violet");
+    runPapirusFolders("violet");
 }
 
 void MainWindow::on_white_clicked()
 {
-    x->start("pkexec papirus-folders -C white");
+    runPapirusFolders("white");
 }
 
 void MainWindow::on_yaru_clicked()
 {
-    x->start("pkexec papirus-folders -C yaru");
+    runPapirusFolders("yaru");
 }
 
 void MainWindow::on_yellow_clicked()
 {
-    x->start("pkexec papirus-folders -C yellow");
+    runPapirusFolders("yellow");
 }
 
 void MainWindow::on_revert_clicked()
 {
-     x->start("pkexec papirus-folders -D");
+    QString program = "pkexec";
+    QStringList arguments;
+    arguments << "env"
+              << QString("WAYLAND_DISPLAY=%1").arg(qgetenv("WAYLAND_DISPLAY"))
+              << QString("XDG_RUNTIME_DIR=%1").arg(qgetenv("XDG_RUNTIME_DIR"))
+              << "papirus-folders"
+              << "-D";
+    x->start(program, arguments);
 }
 
 void MainWindow::on_kill_clicked()
@@ -188,6 +225,5 @@ void MainWindow::on_papirus_triggered()
 
 void MainWindow::on_dark_cyan_clicked()
 {
-    x->start("pkexec papirus-folders -C darkcyan");
+    runPapirusFolders("darkcyan");
 }
-

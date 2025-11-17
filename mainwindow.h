@@ -79,8 +79,13 @@ private slots:
 
     void on_dark_cyan_clicked();
 
+    void processError(QProcess::ProcessError error);
+
+    void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
+
 private:
     Ui::MainWindow *ui;
     QProcess *x;
+    void runPapirusFolders(const QString& color);
 };
 #endif // MAINWINDOW_H

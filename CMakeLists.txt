@@ -24,8 +24,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools)
 
 set(PROJECT_SOURCES
        changelog.cpp
@@ -66,7 +66,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
     )
 
-    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+    if(Qt6LinguistTools_FOUND)
+        qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+    endif()
 else()
     if(ANDROID)
         add_library(papirus-folders-gui SHARED
@@ -77,8 +79,9 @@ else()
             ${PROJECT_SOURCES}
         )
     endif()
-
-    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+    if(Qt5LinguistTools_FOUND)
+        qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+    endif()
 endif()
 
 target_link_libraries(papirus-folders-gui PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
@@ -92,3 +95,18 @@ set_target_properties(papirus-folders-gui PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(papirus-folders-gui)
 endif()
+
+# CPack configuration
+include(InstallRequiredSystemLibraries)
+set(CPACK_GENERATOR "DEB")
+set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+set(CPACK_PACKAGE_CONTACT "pwnbait AKA Fredward Goodboy <fredwardtheincomparable@gmail.com>")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A GUI for papirus-folders, edited with Gemini-CLI (version 1.0, model gemini-1.5-flash-001)")
+set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/pwnbait-AKA-FredwardGoodboy/papirus-folders-gui-wayland")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.deb")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "papirus-folders, libqt6widgets6t64, libqt6gui6t64, libqt6core6t64, libqt6dbus6t64")
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(FILES papirus.desktop DESTINATION share/applications)
+install(FILES folder-logo.svg DESTINATION share/icons/hicolor/scalable/apps/${PROJECT_NAME}.svg)
+include(CPack)
